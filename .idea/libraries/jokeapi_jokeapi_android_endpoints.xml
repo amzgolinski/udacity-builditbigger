@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jokeapi.jokeapi-android-endpoints">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/jokeapi/build/libs/jokeapi-android-endpoints.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
