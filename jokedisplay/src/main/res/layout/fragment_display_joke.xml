@@ -2,12 +2,14 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:padding="@dimen/joke_display_margin"
              android:background="@color/red50"
              tools:context="com.udacity.gradle.builditbigger.jokedisplay.DisplayJokeFragment">
 
   <TextView
-    android:id="@+id/jokeTextView"
+    android:id="@+id/joke_text_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    android:text="This is a joke.  It is a really long joke.  Ha ha.  It is a funny joke."/>
 
 </FrameLayout>

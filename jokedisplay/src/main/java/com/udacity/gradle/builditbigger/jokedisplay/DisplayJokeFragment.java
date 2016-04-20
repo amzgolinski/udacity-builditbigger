@@ -32,7 +32,8 @@ public class DisplayJokeFragment extends Fragment {
 
     Intent intent = getActivity().getIntent();
     String joke = intent.getStringExtra(DisplayJokeActivity.JOKE);
-    TextView jokeTextView = (TextView) rootView.findViewById(R.id.jokeTextView);
+    TextView jokeTextView =
+      (TextView) rootView.findViewById(R.id.joke_text_view);
     if (joke != null && joke.length() > 0) {
       jokeTextView.setText(joke);
     }
