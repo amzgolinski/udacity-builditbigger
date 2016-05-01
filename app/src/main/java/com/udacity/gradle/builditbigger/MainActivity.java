@@ -6,16 +6,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.udacity.gradle.builditbigger.jokedisplay.DisplayJokeActivity;
 
 public class MainActivity extends ActionBarActivity
 implements JokeCallback {
 
+  private ProgressBar spinner;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    spinner = (ProgressBar) findViewById(R.id.progress_bar);
+    spinner.setVisibility(View.GONE);
   }
 
   @Override
@@ -42,12 +47,14 @@ implements JokeCallback {
 
   public void downloadJoke(View view) {
     JokeAsyncTask jokeTask = new JokeAsyncTask((JokeCallback) this);
+    spinner.setVisibility(View.VISIBLE);
     jokeTask.execute();
   }
 
   public void jokeRetrieved(String joke) {
     Intent intent = new Intent(this, DisplayJokeActivity.class);
     intent.putExtra(DisplayJokeActivity.JOKE, joke);
+    spinner.setVisibility(View.GONE);
     startActivity(intent);
   }
 
