@@ -1,20 +1,39 @@
 package com.udacity.gradle.builditbigger;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.udacity.gradle.builditbigger.jokedisplay.DisplayJokeActivity;
 
 
 public class MainActivityFragment extends Fragment {
 
-  public MainActivityFragment() {
+  private static final String DEVICE = AdRequest.DEVICE_ID_EMULATOR;
+  private static final String AD_UNIT_ID
+    = "ca-app-pub-3940256099942544/1033173712";
 
+  private String mJoke;
+  private InterstitialAd mInterstitial;
+
+  public MainActivityFragment() {
+    // empty
+  }
+
+  public void displayJoke(String joke) {
+    mJoke = joke;
+    if (mInterstitial.isLoaded()) {
+      mInterstitial.show();
+    } else {
+      launchDisplayJokeActivity();
+    }
   }
 
   @Override
@@ -22,16 +41,40 @@ public class MainActivityFragment extends Fragment {
                            Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.fragment_main, container, false);
 
+    // banner ad
     AdView mAdView = (AdView) root.findViewById(R.id.ad_view);
-    // Create an ad request. Check logcat output for the hashed device ID to
-    // get test ads on a physical device. e.g.
-    // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on
-    // this device."
     AdRequest adRequest = new AdRequest.Builder()
-      .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+      .addTestDevice(DEVICE)
       .build();
     mAdView.loadAd(adRequest);
+
+    // interstitial ad
+    mInterstitial = new InterstitialAd(this.getActivity());
+    mInterstitial.setAdUnitId(AD_UNIT_ID);
+    mInterstitial.setAdListener(new AdListener() {
+      @Override
+      public void onAdClosed() {
+        requestNewInterstitial();
+        launchDisplayJokeActivity();
+      }
+    });
+
+    requestNewInterstitial();
+
     return root;
+  }
+
+  private void launchDisplayJokeActivity(){
+    Intent intent = new Intent(this.getActivity(), DisplayJokeActivity.class);
+    intent.putExtra(DisplayJokeActivity.JOKE, mJoke);
+    startActivity(intent);
+  }
+
+  private void requestNewInterstitial() {
+    AdRequest adRequest = new AdRequest.Builder()
+      .addTestDevice(DEVICE)
+      .build();
+    mInterstitial.loadAd(adRequest);
   }
 
 }

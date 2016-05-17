@@ -36,9 +36,7 @@ public class AsyncTest extends AndroidTestCase {
     try {
       jokeAsyncTask.execute();
       joke = jokeAsyncTask.get(10, TimeUnit.SECONDS);
-      System.out.println(joke);
       assertNotNull(joke);
-
     } catch (Exception e) {
       fail("Task timed out.");
     }

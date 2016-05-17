@@ -1,26 +1,24 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.udacity.gradle.builditbigger.jokedisplay.DisplayJokeActivity;
+public class MainActivity extends AppCompatActivity implements JokeCallback {
 
-public class MainActivity extends ActionBarActivity
-implements JokeCallback {
-
-  private ProgressBar spinner;
+  private ProgressBar mSpinner;
+  MainActivityFragment mFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    spinner = (ProgressBar) findViewById(R.id.progress_bar);
-    spinner.setVisibility(View.GONE);
+    mSpinner = (ProgressBar) findViewById(R.id .progress_bar);
+    mSpinner.setVisibility(View.GONE);
+    mFragment = (MainActivityFragment) getFragmentManager().findFragmentById(R.id.main_fragment);
   }
 
   @Override
@@ -47,15 +45,13 @@ implements JokeCallback {
 
   public void downloadJoke(View view) {
     JokeAsyncTask jokeTask = new JokeAsyncTask((JokeCallback) this);
-    spinner.setVisibility(View.VISIBLE);
+    mSpinner.setVisibility(View.VISIBLE);
     jokeTask.execute();
   }
 
   public void jokeRetrieved(String joke) {
-    Intent intent = new Intent(this, DisplayJokeActivity.class);
-    intent.putExtra(DisplayJokeActivity.JOKE, joke);
-    spinner.setVisibility(View.GONE);
-    startActivity(intent);
+    mFragment.displayJoke(joke);
+    mSpinner.setVisibility(View.GONE);
   }
 
 }

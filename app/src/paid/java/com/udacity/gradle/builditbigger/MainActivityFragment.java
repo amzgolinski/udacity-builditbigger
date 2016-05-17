@@ -1,13 +1,13 @@
 package com.udacity.gradle.builditbigger;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.udacity.gradle.builditbigger.jokedisplay.DisplayJokeActivity;
 
 
 public class MainActivityFragment extends Fragment {
@@ -20,5 +20,12 @@ public class MainActivityFragment extends Fragment {
                            Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.fragment_main, container, false);
     return root;
+  }
+
+
+  public void displayJoke(String joke) {
+    Intent intent = new Intent(this.getActivity(), DisplayJokeActivity.class);
+    intent.putExtra(DisplayJokeActivity.JOKE, joke);
+    startActivity(intent);
   }
 }

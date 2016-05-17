@@ -1,7 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -30,8 +29,11 @@ public class JokeAsyncTask
 
     if(jokeApiService == null) {  // Only do this once
       JokeApi.Builder builder =
-        new JokeApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-        // options for running against local devappserver
+        new JokeApi.Builder(
+          AndroidHttp.newCompatibleTransport(),
+          new AndroidJsonFactory(),
+          null
+        )
         // - 10.0.2.2 is localhost's IP address in Android emulator
         // - turn off compression when running against local devappserver
         .setRootUrl("http://10.0.2.2:8080/_ah/api/")
