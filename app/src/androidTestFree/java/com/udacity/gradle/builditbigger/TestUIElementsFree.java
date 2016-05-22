@@ -1,13 +1,9 @@
 package com.udacity.gradle.builditbigger;
 
-import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.udacity.gradle.builditbigger.jokedisplay.DisplayJokeActivity;
-
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +41,13 @@ public class TestUIElementsFree {
   public void testInterstitialAdDisplayed() {
 
     onView(withId(R.id.joke_button)).perform(click());
+
+    // sleep for 4 seconds to wait for the interstitial ad to load
+    try {
+      Thread.sleep(4000);
+    } catch (InterruptedException e) {
+      //
+    }
 
     onView(withContentDescription(INTERSTITIAL_AD_CLOSE_BUTTON_DESCRIPTION))
       .check(matches(isDisplayed()));

@@ -20,15 +20,23 @@ allprojects {
     }
 }
 
+task startAppEngine() {
+    dependsOn ":jokeapi:appengineRun"
+}
+
+task runConnectedTests() {
+    dependsOn ":app:connectedAndroidTest"
+    mustRunAfter startAppEngine
+}
+
+task stopAppEngine() {
+    dependsOn ':jokeapi:appengineStop'
+    mustRunAfter runConnectedTests
+}
+
 // tasks for gradle-appengine-plugin are here:
 // https://github.com/GoogleCloudPlatform/gradle-appengine-plugin
-task runTests (dependsOn: [
-        ":jokeapi:appengineRun",
-        ":app:connectedAndroidTest",
-        ":app:connectedAndroidTestFree",
-        ":app:connectedAndroidTestPaid",
-        ":jokeapi:appengineStop"
-    ]) {
+task runTests () {
 
     evaluationDependsOn ":jokeapi"
 
@@ -38,8 +46,8 @@ task runTests (dependsOn: [
         }
     }
 
-    doLast {
-        println "Finished running tests!"
-    }
+    dependsOn startAppEngine
+    dependsOn runConnectedTests
+    dependsOn stopAppEngine
 
 }

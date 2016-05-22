@@ -25,8 +25,6 @@ import static org.hamcrest.core.AllOf.allOf;
 public class TestIntentsFree {
 
   private static final String FREE = "com.udacity.gradle.builditbigger.free";
-  private static final String AD_PACKAGE =
-    "com.google.android.gms.ads.AdActivity";
 
   @Rule
   public IntentsTestRule<MainActivity> mActivityRule =
@@ -37,6 +35,13 @@ public class TestIntentsFree {
 
     onView(withId(R.id.joke_button)).perform(click());
 
+    // sleep for 4 seconds to wait for the interstitial ad to load
+    try {
+      Thread.sleep(4000);
+    } catch (InterruptedException e) {
+      //
+    }
+
     onView(withContentDescription("Interstitial close button"))
       .perform(click());
 
@@ -44,6 +49,5 @@ public class TestIntentsFree {
       hasExtraWithKey(DisplayJokeActivity.JOKE),
       toPackage(FREE)));
   }
-
 
 }
