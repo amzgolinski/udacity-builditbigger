@@ -36,7 +36,7 @@ task stopAppEngine() {
 
 // tasks for gradle-appengine-plugin are here:
 // https://github.com/GoogleCloudPlatform/gradle-appengine-plugin
-task runTests () {
+task runTests (dependsOn: [startAppEngine, runConnectedTests, stopAppEngine]) {
 
     evaluationDependsOn ":jokeapi"
 
@@ -45,9 +45,4 @@ task runTests () {
             daemon true
         }
     }
-
-    dependsOn startAppEngine
-    dependsOn runConnectedTests
-    dependsOn stopAppEngine
-
 }

@@ -42,18 +42,15 @@ public class TestUIElementsFree {
 
     onView(withId(R.id.joke_button)).perform(click());
 
-    // sleep for 4 seconds to wait for the interstitial ad to load
+    // sleep for 5 seconds to wait for the interstitial ad to load
     try {
-      Thread.sleep(4000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       //
     }
 
     onView(withContentDescription(INTERSTITIAL_AD_CLOSE_BUTTON_DESCRIPTION))
       .check(matches(isDisplayed()));
-
-    onView(withContentDescription(INTERSTITIAL_AD_CLOSE_BUTTON_DESCRIPTION))
-      .perform(click());
 
   }
 
